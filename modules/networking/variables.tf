@@ -3,6 +3,7 @@ variable "region" {
   default = "us-east-1"
 }
 
+#Add subnets if more are needed below
 locals {
   public_subnets = {
     "${var.region}a" = "10.0.1.0/28"
