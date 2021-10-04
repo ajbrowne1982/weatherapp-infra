@@ -9,3 +9,20 @@ variable "tags" {
   description = "Use tags to identify project resources"
   default     = {}
 }
+
+variable "region" {
+  type = string
+  description = "Set's the region"
+  default = "us-east-1"
+}
+
+variable "alb-name" {
+  type = string
+  description = "Set's the alb name"
+  default = "abrowne-weatherapp-alb"
+}
+
+# variable "vpc-id" {
+#   description = "VPC ID"
+#   default = module.network.vpc
+# }

@@ -119,3 +119,9 @@ resource "aws_route_table_association" "private" {
   subnet_id      = "${element(aws_subnet.private_subnet.*.id, count.index)}"
   route_table_id = "${aws_route_table.private[count.index].id}"
 }
+
+#create s3 endpoint
+resource "aws_vpc_endpoint" "s3-endpoint" {
+  vpc_id       = aws_vpc.vpc.id
+  service_name = "com.amazonaws.us-east-1.s3"
+}

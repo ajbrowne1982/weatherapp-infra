@@ -17,5 +17,16 @@ output "bucket_name_arn" {
 
 module "network" {
   source = "./modules/networking"
-
+  region = var.region
 }
+
+output "vpc" {
+  description = "The VPC ID"
+  value       = ["${module.network.vpc}"]
+}
+
+# module "alb" {
+#   source = "./modules/alb"
+#   region = var.region
+#   name   = var.alb-name
+# }
