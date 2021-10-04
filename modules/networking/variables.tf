@@ -3,7 +3,6 @@ variable "region" {
   default = ""
 }
 
-#Add subnets below
 locals {
   public_subnets = {
     "${var.region}a" = "10.0.1.0/28"
