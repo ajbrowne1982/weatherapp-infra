@@ -1,4 +1,4 @@
-variable "alb-name" {
-    type = string
-    default = ""
-}
+# variable "alb-name" {
+#     type = string
+#     default = ""
+# }
