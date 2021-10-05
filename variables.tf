@@ -33,8 +33,3 @@ variable "alb-name" {
   description = "Set's the alb name"
   default     = "abrowne-weatherapp-alb"
 }
-
-# variable "vpc-id" {
-#   description = "VPC ID"
-#   default = module.network.vpc
-# }
