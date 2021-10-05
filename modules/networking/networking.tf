@@ -5,7 +5,7 @@ resource "aws_vpc" "vpc" {
   enable_dns_support   = true
   enable_dns_hostnames = true
   tags = {
-    Name = "abrowne-project-vpc"
+    Name = "${var.myname}-${var.projectname}-vpc"
   }
 }
 
@@ -17,7 +17,7 @@ resource "aws_subnet" "public_subnet" {
   availability_zone = "${element(keys(local.public_subnets), count.index)}"
   map_public_ip_on_launch = true
   tags = {
-    Name = "ab-public-${element(keys(local.public_subnets), count.index)}"
+    Name = "${var.myname}-public-${element(keys(local.public_subnets), count.index)}"
   }
 }
 
@@ -29,7 +29,7 @@ resource "aws_subnet" "private_subnet" {
   availability_zone = "${element(keys(local.public_subnets), count.index)}"
   map_public_ip_on_launch = false
   tags = {
-    Name = "ab-private-${element(keys(local.public_subnets), count.index)}"
+    Name = "${var.myname}-private-${element(keys(local.public_subnets), count.index)}"
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "abrowne-project-igw"
+    Name = "${var.myname}-${var.projectname}-igw"
   }
 }
 
@@ -48,7 +48,7 @@ resource "aws_route_table" "public" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "ab-public-routetable-${element(keys(local.public_subnets), count.index)}"
+    Name = "${var.myname}-public-routetable-${element(keys(local.public_subnets), count.index)}"
   }
 }
 
@@ -76,7 +76,7 @@ resource "aws_eip" "ab-nat-eip" {
   count      = length(local.private_subnets)
   vpc = true
   tags = {
-    Name = "ab-eip-${element(keys(local.public_subnets), count.index)}"
+    Name = "${var.myname}-eip-${element(keys(local.public_subnets), count.index)}"
   }
 }
 
@@ -87,7 +87,7 @@ resource "aws_nat_gateway" "nat" {
   subnet_id     = aws_subnet.private_subnet[count.index].id
 
   tags = {
-    Name = "ab-nat-${element(keys(local.public_subnets), count.index)}"
+    Name = "${var.myname}-nat-${element(keys(local.public_subnets), count.index)}"
   }
 }
 
@@ -97,7 +97,7 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "ab-private-routetable-${element(keys(local.public_subnets), count.index)}"
+    Name = "${var.myname}-private-routetable-${element(keys(local.public_subnets), count.index)}"
   }
 }
 

@@ -27,6 +27,6 @@ output "vpc" {
 
 # module "alb" {
 #   source = "./modules/alb"
-#   region = var.region
-#   name   = var.alb-name
+#   # region = "us-east-1"
+#   public_subnets = module.network.public_subnets
 # }
