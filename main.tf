@@ -25,8 +25,6 @@ output "vpc" {
   value       = ["${module.network.vpc}"]
 }
 
-# module "alb" {
-#   source = "./modules/alb"
-#   # region = "us-east-1"
-#   public_subnets = module.network.public_subnets
-# }
+module "ecr" {
+  source = "./modules/ecr"
+}
