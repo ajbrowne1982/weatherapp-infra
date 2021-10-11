@@ -31,10 +31,16 @@ locals {
   }
 }
 
-variable "port" {
-  description = "list of ports allowed in the security group"
+variable "ext-port" {
+  description = "Port used to access the app externally"
   type = string
   default = "80"
+}
+
+variable "int-port" {
+  description = "Port used to access the app internally"
+  type = string
+  default = "3000"
 }
 
 variable "protocol" {

@@ -6,7 +6,7 @@ resource "aws_lb" "alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
-  subnets            = aws_subnet.public_subnet.*.id
+  subnets            = ["aws_subnet.public_subnet.[0].id", "aws_subnet.public_subnet.[1].id"]
 
   enable_deletion_protection = true
 }
@@ -14,20 +14,21 @@ resource "aws_lb" "alb" {
 # # Load balancer listener
 resource "aws_lb_listener" "alb-listener" {
   load_balancer_arn = aws_lb.alb.arn
-  port              = var.port
+  port              = var.ext-port
   protocol          = var.protocol
     
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.alb_tg.arn
+    target_group_arn = aws_lb_target_group.alb-tg.arn
   }
 }
 
 # Target group
-resource "aws_lb_target_group" "alb_tg" {
+resource "aws_lb_target_group" "alb-tg" {
   name     = "${var.myname}-${var.projectname}-tg"
-  port     = var.port
+  port     = var.int-port
   protocol = var.protocol
+  target_type = "ip"
   vpc_id   = aws_vpc.vpc.id
 }
 
@@ -38,8 +39,8 @@ resource "aws_security_group" "alb_sg" {
   vpc_id      = aws_vpc.vpc.id
 
   ingress {
-    from_port = var.port
-    to_port   = var.port
+    from_port = var.ext-port
+    to_port   = var.ext-port
     protocol  = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -56,7 +57,7 @@ resource "aws_security_group" "alb_sg" {
 
 #outputs
 output "target_group_arns" {
-  value = aws_lb_target_group.alb_tg.arn
+  value = aws_lb_target_group.alb-tg.arn
 }
 
 output "alb_dns_address" {
