@@ -43,7 +43,7 @@ resource "aws_ecs_task_definition" "ab-ecs-task-fam" {
   container_definitions = jsonencode([
     {
       "name": "${var.myname}-${var.projectname}-ecs-container",
-      "image": "152848913167.dkr.ecr.us-east-1.amazonaws.com/ajbrowne1982-weather-app-ecr-repo:latest",
+      "image": "152848913167.dkr.ecr.us-east-1.amazonaws.com/ajbrowne1982-weather-app-ecr-repo",
       "cpu": 256,
       "memory": 512,
       "requiresCompatibilities": [
