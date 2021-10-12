@@ -45,7 +45,6 @@ resource "aws_ecs_task_definition" "ab-ecs-task-fam" {
       memory = 512
       portMappings = [
         {
-          protocol      = tcp
           containerPort = 3000
           hostPort      = 3000
         }
