@@ -1,17 +1,17 @@
 variable "myname" {
-    description = "my github username used to populate names of resources"
-    type = string
-    default = "ajbrowne1982"
+  description = "my github username used to populate names of resources"
+  type        = string
+  default     = "ajbrowne1982"
 }
 
 variable "projectname" {
-    description = "the project name used to populate names of resources"
-    type = string
-    default = "weather-app"
+  description = "the project name used to populate names of resources"
+  type        = string
+  default     = "weather-app"
 }
 
 variable "region" {
-  type  = string
+  type    = string
   default = ""
 }
 
@@ -33,30 +33,35 @@ locals {
 
 variable "ext-port" {
   description = "Port used to access the app externally"
-  type = string
-  default = "80"
+  type        = string
+  default     = "80"
 }
 
 variable "int-port" {
   description = "Port used to access the app internally"
-  type = string
-  default = "3000"
+  type        = string
+  default     = "3000"
 }
 
 variable "protocol" {
   description = "protocol used"
-  type = string
-  default = "HTTP"
+  type        = string
+  default     = "HTTP"
 }
 
 variable "alb-name" {
-    description = "ALB security group name"
-    type = string
-    default = "abrowne-weather-app-alb"
+  description = "ALB security group name"
+  type        = string
+  default     = "abrowne-weather-app-alb"
 }
 
 variable "alb-sg-name" {
-    description = "ALB security group name"
-    type = string
-    default = "abrowne-weather-app-alb-sg"
+  description = "ALB security group name"
+  type        = string
+  default     = "abrowne-weather-app-alb-sg"
+}
+
+variable "ecr-repo-url" {
+  description = "ECR repo URL"
+  type        = string
 }

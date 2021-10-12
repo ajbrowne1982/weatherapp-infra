@@ -7,3 +7,20 @@ resource "aws_ssm_parameter" "ab-ssm-ecr-store" {
   type  = "String"
   value = aws_ecr_repository.ab-ecr-repo.repository_url
 }
+
+# Outputs
+output "ecr-repo-name" {
+    description = "ECR repository name"
+    value       = aws_ecr_repository.ab-ecr-repo.name
+}
+
+
+output "ecr-repo-id" {
+    description = "ECR repository id"
+    value       = aws_ecr_repository.ab-ecr-repo.id
+}
+
+output "ecr-repo-url" {
+    description = "ECR repository url"
+    value       = aws_ecr_repository.ab-ecr-repo.repository_url
+}
