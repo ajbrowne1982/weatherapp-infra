@@ -5,8 +5,8 @@ output "vpc" {
 }
 
 output "public_subnets" {
-    description = "List of public subnet names"
-    value       = aws_subnet.public_subnet.*.id
+  description = "List of public subnet names"
+  value       = aws_subnet.public_subnet.*.id
 }
 # output "private_subnets" {
 #     description = "List of private subnet names"

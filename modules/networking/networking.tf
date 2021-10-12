@@ -1,7 +1,7 @@
 #Create VPC
 resource "aws_vpc" "vpc" {
-  cidr_block       = "10.0.1.0/24"
-  instance_tenancy = "default"
+  cidr_block           = "10.0.1.0/24"
+  instance_tenancy     = "default"
   enable_dns_support   = true
   enable_dns_hostnames = true
   tags = {
@@ -11,10 +11,10 @@ resource "aws_vpc" "vpc" {
 
 #Create public subnets
 resource "aws_subnet" "public_subnet" {
-  count      = length(local.public_subnets)
-  cidr_block = "${element(values(local.public_subnets), count.index)}"
-  vpc_id            = aws_vpc.vpc.id
-  availability_zone = "${element(keys(local.public_subnets), count.index)}"
+  count                   = length(local.public_subnets)
+  cidr_block              = element(values(local.public_subnets), count.index)
+  vpc_id                  = aws_vpc.vpc.id
+  availability_zone       = element(keys(local.public_subnets), count.index)
   map_public_ip_on_launch = true
   tags = {
     Name = "${var.myname}-public-${element(keys(local.public_subnets), count.index)}"
@@ -23,10 +23,10 @@ resource "aws_subnet" "public_subnet" {
 
 #Create private subnets
 resource "aws_subnet" "private_subnet" {
-  count      = length(local.private_subnets)
-  cidr_block = "${element(values(local.private_subnets), count.index)}"
-  vpc_id            = aws_vpc.vpc.id
-  availability_zone = "${element(keys(local.public_subnets), count.index)}"
+  count                   = length(local.private_subnets)
+  cidr_block              = element(values(local.private_subnets), count.index)
+  vpc_id                  = aws_vpc.vpc.id
+  availability_zone       = element(keys(local.public_subnets), count.index)
   map_public_ip_on_launch = false
   tags = {
     Name = "${var.myname}-private-${element(keys(local.public_subnets), count.index)}"
@@ -44,7 +44,7 @@ resource "aws_internet_gateway" "igw" {
 
 #create public route table
 resource "aws_route_table" "public" {
-  count = length(local.public_subnets)
+  count  = length(local.public_subnets)
   vpc_id = aws_vpc.vpc.id
 
   tags = {
@@ -54,10 +54,10 @@ resource "aws_route_table" "public" {
 
 #create routes to internet gateway
 resource "aws_route" "public_internet_gateway" {
-  count = length(local.public_subnets)
-  route_table_id = aws_route_table.public[count.index].id
+  count                  = length(local.public_subnets)
+  route_table_id         = aws_route_table.public[count.index].id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.igw.id}"
+  gateway_id             = aws_internet_gateway.igw.id
 
   timeouts {
     create = "5m"
@@ -66,15 +66,15 @@ resource "aws_route" "public_internet_gateway" {
 
 #associate public subnets with the public route tables
 resource "aws_route_table_association" "public" {
-  count = length(local.public_subnets)
-  subnet_id      = "${element(aws_subnet.public_subnet.*.id, count.index)}"
-  route_table_id = "${aws_route_table.public[count.index].id}"
+  count          = length(local.public_subnets)
+  subnet_id      = element(aws_subnet.public_subnet.*.id, count.index)
+  route_table_id = aws_route_table.public[count.index].id
 }
 
 #create eip for the nat gateways
 resource "aws_eip" "ab-nat-eip" {
-  count      = length(local.private_subnets)
-  vpc = true
+  count = length(local.private_subnets)
+  vpc   = true
   tags = {
     Name = "${var.myname}-eip-${element(keys(local.public_subnets), count.index)}"
   }
@@ -82,9 +82,9 @@ resource "aws_eip" "ab-nat-eip" {
 
 #create nat gateways
 resource "aws_nat_gateway" "nat" {
-  count      = length(local.private_subnets)
+  count         = length(local.private_subnets)
   allocation_id = aws_eip.ab-nat-eip[count.index].id
-  subnet_id     = aws_subnet.private_subnet[count.index].id
+  subnet_id     = aws_subnet.public_subnet[count.index].id
 
   tags = {
     Name = "${var.myname}-nat-${element(keys(local.public_subnets), count.index)}"
@@ -93,7 +93,7 @@ resource "aws_nat_gateway" "nat" {
 
 #create private route tables
 resource "aws_route_table" "private" {
-  count = length(local.private_subnets)
+  count  = length(local.private_subnets)
   vpc_id = aws_vpc.vpc.id
 
   tags = {
@@ -103,8 +103,8 @@ resource "aws_route_table" "private" {
 
 #create routes to nat gateway
 resource "aws_route" "private_nat_gateway" {
-  count = length(local.private_subnets)
-  route_table_id = aws_route_table.private[count.index].id
+  count                  = length(local.private_subnets)
+  route_table_id         = aws_route_table.private[count.index].id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_nat_gateway.nat[count.index].id
 
@@ -115,9 +115,9 @@ resource "aws_route" "private_nat_gateway" {
 
 #associate route table with the private subnets
 resource "aws_route_table_association" "private" {
-  count = length(local.private_subnets)
-  subnet_id      = "${element(aws_subnet.private_subnet.*.id, count.index)}"
-  route_table_id = "${aws_route_table.private[count.index].id}"
+  count          = length(local.private_subnets)
+  subnet_id      = element(aws_subnet.private_subnet.*.id, count.index)
+  route_table_id = aws_route_table.private[count.index].id
 }
 
 #create s3 endpoint
