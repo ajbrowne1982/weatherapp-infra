@@ -25,11 +25,11 @@ resource "aws_ecs_service" "ecs-service" {
     container_port   = 3000
     container_name   = "${var.myname}-${var.projectname}-ecs-container"
   }
-  capacity_provider_strategy {
-    base              = 0
-    capacity_provider = "FARGATE"
-    weight            = 100
-  }
+  # capacity_provider_strategy {
+  #   base              = 0
+  #   capacity_provider = "FARGATE"
+  #   weight            = 100
+  # }
 }
 
 #ecs task
