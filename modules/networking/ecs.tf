@@ -36,6 +36,7 @@ resource "aws_ecs_service" "ecs-service" {
 resource "aws_ecs_task_definition" "ab-ecs-task-fam" {
   family             = "${var.myname}-${var.projectname}-fam"
   execution_role_arn = aws_iam_role.ecs_role.arn
+  task_role_arn      = aws_iam_role.ecs_role.arn
   network_mode       = "awsvpc"
   memory             = 512
   cpu                = 256

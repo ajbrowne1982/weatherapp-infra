@@ -84,7 +84,7 @@ resource "aws_eip" "ab-nat-eip" {
 resource "aws_nat_gateway" "nat" {
   count         = length(local.private_subnets)
   allocation_id = aws_eip.ab-nat-eip[count.index].id
-  subnet_id     = aws_subnet.private_subnet[count.index].id
+  subnet_id     = aws_subnet.public_subnet[count.index].id
 
   tags = {
     Name = "${var.myname}-nat-${element(keys(local.public_subnets), count.index)}"
