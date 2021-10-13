@@ -62,6 +62,5 @@ variable "alb-sg-name" {
 }
 
 variable "ecr-repo-url" {
-  description = "ECR repo URL"
-  type        = string
+  default = ""
 }
