@@ -14,7 +14,6 @@ output "ecr-repo-name" {
     value       = aws_ecr_repository.ab-ecr-repo.name
 }
 
-
 output "ecr-repo-id" {
     description = "ECR repository id"
     value       = aws_ecr_repository.ab-ecr-repo.id

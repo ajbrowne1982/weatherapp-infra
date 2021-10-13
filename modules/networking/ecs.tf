@@ -25,11 +25,6 @@ resource "aws_ecs_service" "ecs-service" {
     container_port   = 3000
     container_name   = "${var.myname}-${var.projectname}-ecs-container"
   }
-  # capacity_provider_strategy {
-  #   base              = 0
-  #   capacity_provider = "FARGATE"
-  #   weight            = 100
-  # }
 }
 
 #ecs task
@@ -43,7 +38,7 @@ resource "aws_ecs_task_definition" "ab-ecs-task-fam" {
   container_definitions = jsonencode([
     {
       "name": "${var.myname}-${var.projectname}-ecs-container",
-      "image": "152848913167.dkr.ecr.us-east-1.amazonaws.com/ajbrowne1982-weather-app-ecr-repo:latest",
+      "image": "${var.ecr-repo-url}",
       "cpu": 256,
       "memory": 512,
       "requiresCompatibilities": [
@@ -61,6 +56,7 @@ resource "aws_ecs_task_definition" "ab-ecs-task-fam" {
   ])
 }
 
+#/ajbrowne1982-weather-app-ecr-repo
 #ecs security group
 resource "aws_security_group" "ecs_sg" {
   name        = "${var.myname}-${var.projectname}-ecs-sg"
