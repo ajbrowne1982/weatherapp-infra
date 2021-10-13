@@ -19,7 +19,6 @@ module "network" {
   source       = "./modules/networking"
   region       = var.region
   ecr-repo-url = module.ecr.ecr-repo-url
-  # module.vpc.vpc.id
 
 }
 
