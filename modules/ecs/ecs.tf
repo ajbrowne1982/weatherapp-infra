@@ -16,15 +16,16 @@ resource "aws_ecs_service" "ecs-service" {
   desired_count   = 1
 
   network_configuration {
-    subnets          = [aws_subnet.private_subnet[0].id, aws_subnet.private_subnet[2].id]
+    subnets          = var.private_subnets
     assign_public_ip = false
     security_groups  = [aws_security_group.ecs_sg.id]
   }
   load_balancer {
-    target_group_arn = aws_lb_target_group.alb-tg.arn
+    target_group_arn = var.tg_arn
     container_port   = 3000
     container_name   = "${var.myname}-${var.projectname}-ecs-container"
   }
+    tags = var.tags
 }
 
 #ecs task
@@ -56,18 +57,17 @@ resource "aws_ecs_task_definition" "ab-ecs-task-fam" {
   ])
 }
 
-#/ajbrowne1982-weather-app-ecr-repo
 #ecs security group
 resource "aws_security_group" "ecs_sg" {
   name        = "${var.myname}-${var.projectname}-ecs-sg"
   description = "Security group for abrowne weather app ecs cluster"
-  vpc_id      = aws_vpc.vpc.id
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = var.int-port
     to_port     = var.int-port
     protocol    = "tcp"
-    security_groups = [aws_security_group.alb_sg.id]
+    security_groups = [var.alb_sg]
   }
 
   egress {
@@ -77,5 +77,5 @@ resource "aws_security_group" "ecs_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  #   tags = var.tags
+   tags = var.tags
 }

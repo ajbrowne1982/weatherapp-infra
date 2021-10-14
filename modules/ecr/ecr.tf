@@ -1,5 +1,6 @@
 resource "aws_ecr_repository" "ab-ecr-repo" {
   name  = "${var.myname}-${var.projectname}-ecr-repo"
+  tags = var.tags
 }
 
 resource "aws_ssm_parameter" "ab-ssm-ecr-store" {

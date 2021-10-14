@@ -7,8 +7,13 @@ resource "aws_lb" "alb" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
   subnets            = [aws_subnet.public_subnet[0].id, aws_subnet.public_subnet[2].id]
-  
   enable_deletion_protection = true
+  access_logs {
+    bucket  = var.s3_bucket_name
+    prefix  = "alb-logs"
+    enabled = true
+  }
+  tags = var.tags
 }
 
 # # Load balancer listener
@@ -30,6 +35,7 @@ resource "aws_lb_target_group" "alb-tg" {
   protocol    = var.protocol
   target_type = "ip"
   vpc_id      = aws_vpc.vpc.id
+  tags = var.tags
 }
 
 #alb security group
@@ -52,26 +58,5 @@ resource "aws_security_group" "alb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  #   tags = var.tags
+   tags = var.tags
 }
-
-#outputs
-output "target_group_arns" {
-  value = aws_lb_target_group.alb-tg.arn
-}
-
-output "alb_dns_address" {
-  value = aws_lb.alb.dns_name
-}
-
-output "alb_name" {
-  value = aws_lb.alb.name
-}
-
-# output "alb_zone_id" {
-#   value = aws_lb.alb.zone_id
-# }
-
-# output alb_sg_id {
-#   value = aws_security_group.alb_sg.id
-# }
