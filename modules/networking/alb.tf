@@ -52,9 +52,9 @@ resource "aws_security_group" "alb_sg" {
   }
 
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    from_port   = var.int-port
+    to_port     = var.int-port
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
