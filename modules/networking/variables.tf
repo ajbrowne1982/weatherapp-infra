@@ -1,11 +1,11 @@
 variable "myname" {
-    description = "my github username used to populate names of resources"
-    default = ""
+  description = "my github username used to populate names of resources"
+  default     = ""
 }
 
 variable "projectname" {
-    description = "the project name used to populate names of resources"
-    default = ""
+  description = "the project name used to populate names of resources"
+  default     = ""
 }
 
 variable "region" {
@@ -14,7 +14,7 @@ variable "region" {
 }
 
 variable "tags" {
-    description = "default tags defined in the root module"
+  description = "default tags defined in the root module"
   default     = {}
 }
 
@@ -65,6 +65,6 @@ variable "alb-sg-name" {
 }
 
 variable "s3_bucket_name" {
-        description = "s3 bucket name"
-  default = ""
+  description = "s3 bucket name"
+  default     = ""
 }

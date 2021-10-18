@@ -25,7 +25,7 @@ resource "aws_ecs_service" "ecs-service" {
     container_port   = 3000
     container_name   = "${var.myname}-${var.projectname}-ecs-container"
   }
-    tags = var.tags
+  tags = var.tags
 }
 
 #ecs task
@@ -38,19 +38,19 @@ resource "aws_ecs_task_definition" "ab-ecs-task-fam" {
   cpu                = 256
   container_definitions = jsonencode([
     {
-      "name": "${var.myname}-${var.projectname}-ecs-container",
-      "image": "${var.ecr-repo-url}",
-      "cpu": 256,
-      "memory": 512,
-      "requiresCompatibilities": [
+      "name" : "${var.myname}-${var.projectname}-ecs-container",
+      "image" : "${var.ecr-repo-url}",
+      "cpu" : 256,
+      "memory" : 512,
+      "requiresCompatibilities" : [
         "FARGATE"
-    ],
-      "networkMode": "awsvpc"
-      "executionRoleArn": "{aws_iam_role.ecs_role.arn}"
-      "portMappings": [
+      ],
+      "networkMode" : "awsvpc"
+      "executionRoleArn" : "{aws_iam_role.ecs_role.arn}"
+      "portMappings" : [
         {
-          "containerPort": 3000,
-          "hostPort": 3000
+          "containerPort" : 3000,
+          "hostPort" : 3000
         }
       ]
     },
@@ -64,9 +64,9 @@ resource "aws_security_group" "ecs_sg" {
   vpc_id      = var.vpc_id
 
   ingress {
-    from_port   = var.int-port
-    to_port     = var.int-port
-    protocol    = "tcp"
+    from_port       = var.int-port
+    to_port         = var.int-port
+    protocol        = "tcp"
     security_groups = [var.alb_sg]
   }
 
@@ -77,5 +77,5 @@ resource "aws_security_group" "ecs_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-   tags = var.tags
+  tags = var.tags
 }
