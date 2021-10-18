@@ -1,18 +1,21 @@
 variable "myname" {
-  description = "my github username used to populate names of resources"
-  type        = string
-  default     = "ajbrowne1982"
+    description = "my github username used to populate names of resources"
+    default = ""
 }
 
 variable "projectname" {
-  description = "the project name used to populate names of resources"
-  type        = string
-  default     = "weather-app"
+    description = "the project name used to populate names of resources"
+    default = ""
 }
 
 variable "region" {
   type    = string
   default = ""
+}
+
+variable "tags" {
+    description = "default tags defined in the root module"
+  default     = {}
 }
 
 locals {
@@ -61,6 +64,7 @@ variable "alb-sg-name" {
   default     = "abrowne-weather-app-alb-sg"
 }
 
-variable "ecr-repo-url" {
+variable "s3_bucket_name" {
+        description = "s3 bucket name"
   default = ""
 }

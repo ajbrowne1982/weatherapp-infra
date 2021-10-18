@@ -71,6 +71,13 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.public[count.index].id
 }
 
+#associate route table with s3 endpoint
+resource "aws_vpc_endpoint_route_table_association" "s3_route_table_public_association" {
+  count          = length(local.public_subnets)
+  route_table_id = aws_route_table.public[count.index].id
+  vpc_endpoint_id = aws_vpc_endpoint.s3-endpoint.id
+}
+
 #create eip for the nat gateways
 resource "aws_eip" "ab-nat-eip" {
   count = length(local.private_subnets)
@@ -118,6 +125,13 @@ resource "aws_route_table_association" "private" {
   count          = length(local.private_subnets)
   subnet_id      = element(aws_subnet.private_subnet.*.id, count.index)
   route_table_id = aws_route_table.private[count.index].id
+}
+
+#associate route table with s3 endpoint
+resource "aws_vpc_endpoint_route_table_association" "s3_route_table_private_association" {
+  count          = length(local.private_subnets)
+  route_table_id = aws_route_table.private[count.index].id
+  vpc_endpoint_id = aws_vpc_endpoint.s3-endpoint.id
 }
 
 #create s3 endpoint

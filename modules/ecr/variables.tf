@@ -1,11 +1,14 @@
 variable "myname" {
     description = "my github username used to populate names of resources"
-    type = string
-    default = "ajbrowne1982"
+    default = ""
 }
 
 variable "projectname" {
     description = "the project name used to populate names of resources"
-    type = string
-    default = "weather-app"
+    default = ""
+}
+
+variable "tags" {
+    description = "Tags set in the root module"
+  default     = {}
 }
