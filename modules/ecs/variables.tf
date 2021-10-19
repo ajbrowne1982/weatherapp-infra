@@ -1,45 +1,45 @@
 variable "tags" {
-      description = "default tags defined in the root module"
+  description = "default tags defined in the root module"
   default     = {}
 }
 variable "myname" {
-    description = "my github username used to populate names of resources"
-    default = ""
+  description = "my github username used to populate names of resources"
+  default     = ""
 }
 
 variable "projectname" {
-    description = "the project name used to populate names of resources"
-    default = ""
+  description = "the project name used to populate names of resources"
+  default     = ""
 }
 
 variable "private_subnets" {
   description = "list of private subnets"
-  default = ""
+  default     = ""
 }
 
 variable "ecr-repo-url" {
-      description = "ECR repo URL"
-  default = ""
+  description = "ECR repo URL"
+  default     = ""
 }
 
 variable "alb_sg" {
   description = "ALB security group ID"
-  default = ""
+  default     = ""
 }
 
 variable "alb_arn" {
   description = "ALB ARN"
-  default = ""
+  default     = ""
 }
 
 variable "tg_arn" {
-    description = "Target group ARN"
-    default = ""
+  description = "Target group ARN"
+  default     = ""
 }
 
 variable "vpc_id" {
   description = "VPC ID"
-  default = ""
+  default     = ""
 }
 
 variable "int-port" {

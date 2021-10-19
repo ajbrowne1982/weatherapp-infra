@@ -73,8 +73,8 @@ resource "aws_route_table_association" "public" {
 
 #associate route table with s3 endpoint
 resource "aws_vpc_endpoint_route_table_association" "s3_route_table_public_association" {
-  count          = length(local.public_subnets)
-  route_table_id = aws_route_table.public[count.index].id
+  count           = length(local.public_subnets)
+  route_table_id  = aws_route_table.public[count.index].id
   vpc_endpoint_id = aws_vpc_endpoint.s3-endpoint.id
 }
 
@@ -129,8 +129,8 @@ resource "aws_route_table_association" "private" {
 
 #associate route table with s3 endpoint
 resource "aws_vpc_endpoint_route_table_association" "s3_route_table_private_association" {
-  count          = length(local.private_subnets)
-  route_table_id = aws_route_table.private[count.index].id
+  count           = length(local.private_subnets)
+  route_table_id  = aws_route_table.private[count.index].id
   vpc_endpoint_id = aws_vpc_endpoint.s3-endpoint.id
 }
 

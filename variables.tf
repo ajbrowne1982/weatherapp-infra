@@ -1,7 +1,7 @@
 variable "myname" {
   description = "my github username used to populate names of resources"
   type        = string
-  default     = "ajbrowne1982"
+  default     = "abrowne"
 }
 
 variable "projectname" {
@@ -19,7 +19,7 @@ variable "bucket" {
 variable "tags" {
   type        = map(string)
   description = "Use tags to identify project resources"
-  default     = {
+  default = {
     Owner   = "Andrew Browne"
     Project = "Weather App"
   }
@@ -36,3 +36,4 @@ variable "alb-name" {
   description = "Set's the alb name"
   default     = "abrowne-weatherapp-alb"
 }
+

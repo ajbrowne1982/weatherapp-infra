@@ -2,11 +2,11 @@
 
 # Load balancer
 resource "aws_lb" "alb" {
-  name               = "${var.myname}-${var.projectname}-alb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb_sg.id]
-  subnets            = [aws_subnet.public_subnet[0].id, aws_subnet.public_subnet[2].id]
+  name                       = "${var.myname}-${var.projectname}-alb"
+  internal                   = false
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.alb_sg.id]
+  subnets                    = [aws_subnet.public_subnet[0].id, aws_subnet.public_subnet[2].id]
   enable_deletion_protection = true
   access_logs {
     bucket  = var.s3_bucket_name
@@ -35,7 +35,7 @@ resource "aws_lb_target_group" "alb-tg" {
   protocol    = var.protocol
   target_type = "ip"
   vpc_id      = aws_vpc.vpc.id
-  tags = var.tags
+  tags        = var.tags
 }
 
 #alb security group
@@ -58,5 +58,5 @@ resource "aws_security_group" "alb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-   tags = var.tags
+  tags = var.tags
 }
