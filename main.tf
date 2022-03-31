@@ -5,6 +5,8 @@ module "s3_bucket" {
   tags   = var.tags
 }
 
+
+
 module "network" {
   source         = "./modules/networking"
   region         = var.region
